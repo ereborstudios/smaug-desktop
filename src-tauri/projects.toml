@@ -1,0 +1,7 @@
+[projects.A]
+name = "Foobar"
+path = "/tmp/foobar"
+
+[projects.B]
+name = "FooBaz"
+path = "/tmp/foobaz"

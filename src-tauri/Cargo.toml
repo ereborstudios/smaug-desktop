@@ -1,0 +1,31 @@
+[package]
+name = "smaug-desktop"
+version = "0.1.0"
+description = "A tool to manage your DragonRuby Game Toolkit projects"
+authors = ["Logan Koester <logan@logankoester.com>"]
+license = "© 2021 Erebor Studios"
+repository = "https://github.com/ereborstudios/smaug-desktop"
+homepage = "https://smaug.dev"
+default-run = "smaug-desktop"
+edition = "2018"
+build = "src/build.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+tauri-build = { version = "1.0.0-beta.4" }
+
+[dependencies]
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+tauri = { version = "1.0.0-beta.8", features = ["api-all", "updater"] }
+toml = "0.5"
+directories = "3.0.2"
+log = "0.4"
+config = "0.11.0"
+serde_derive = "1.0.130"
+toml_edit = "0.3.1"
+
+[features]
+default = [ "custom-protocol" ]
+custom-protocol = [ "tauri/custom-protocol" ]
