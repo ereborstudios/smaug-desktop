@@ -13,31 +13,62 @@ jobs:
 
     runs-on: ${{ matrix.platform }}
     steps:
-    - uses: actions/checkout@v2
-    - name: setup node
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12
-    - name: install Rust stable
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-    - name: install tauri bundler
-      run: cargo install tauri-bundler --force
-    - name: install webkit2gtk (ubuntu only)
-      if: matrix.platform == 'ubuntu-18.04'
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y webkit2gtk-4.0 libgtk-3-dev libappindicator3-dev
-    - name: install app dependencies and build it
-      run: yarn && yarn build
-    - uses: tauri-apps/tauri-action@v0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tagName: __VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
-        releaseName: "Smaug Desktop __VERSION__"
-        releaseBody: "See the assets to download this version and install."
-        releaseDraft: true
-        prerelease: false
-        includeDebug: true
+      - uses: actions/checkout@v2
+
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            src-tauri/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: install Rust stable
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+
+      - name: install tauri bundler
+        run: cargo install tauri-bundler --force
+
+      - name: install webkit2gtk (ubuntu only)
+        if: matrix.platform == 'ubuntu-18.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y webkit2gtk-4.0 libgtk-3-dev libappindicator3-dev
+
+      - name: install app dependencies and build it
+        run: yarn && yarn build
+
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: __VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
+          releaseName: "Smaug Desktop __VERSION__"
+          releaseBody: "See the assets to download this version and install."
+          releaseDraft: true
+          prerelease: false
+          includeDebug: false
+
+      - name: Verifies and builds the package
+        uses: 2m/arch-pkgbuild-builder@v1.18
+        with:
+          target: 'pkgbuild'
+          pkgname: 'pkg/arch/smaug-desktop'
+
+      - name: Upload Arch Linux release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: '${{ github.event.release.upload_url }}'
+          asset_path: 'pkg/arch/smaug-desktop/smaug-desktop-${{ github.event.release.tag_name }}-1-x86_64.pkg.tar.zst'
+          asset_name: 'smaug-desktop-${{ github.event.release.tag_name }}-1-x86_64.pkg.tar.zst'
+          asset_content_type: application/octet-stream
