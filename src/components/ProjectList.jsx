@@ -18,7 +18,7 @@ export default function ProjectList() {
   useEffect(() => {
     loadSettings();
     console.log('settings', settings);
-  }, [newProjectDialog]);
+  }, [newProjectDialog, loadSettings, settings]);
 
   return (
     <div className="px-4 py-5 bg-white border-b border-gray-200 sm:px-6">

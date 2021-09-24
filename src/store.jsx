@@ -1,9 +1,6 @@
-import { createStore, action, thunk, actionOn } from 'easy-peasy';
+import { createStore, action, thunk } from 'easy-peasy';
 import 'easy-peasy/map-set-support';
-import { invoke } from '@tauri-apps/api/tauri'
-import { ObjectModel, ArrayModel } from 'objectmodel'
 import { run } from './smaug';
-import { emit, listen } from '@tauri-apps/api/event'
 import settingsModel from './models/Settings';
 import toolkitModel from './models/Toolkit';
 import projectModel from './models/Project';

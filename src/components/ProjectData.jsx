@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useStoreState, useStoreActions } from 'easy-peasy';
 import semver from 'semver';
 import { ProjectStore } from '../stores/ProjectStore'
-import { PaperClipIcon } from '@heroicons/react/solid'
 
 const Row = ({ children, ...props }) => (
   <div className="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
@@ -15,7 +13,7 @@ const Label = ({ helpText, children, ...props }) => (
     <label htmlFor="about" className="block sm:pt-2">
       {children}
       {helpText &&
-        <p className="mt-2 text-xs text-gray-400 font-medium">
+        <p className="mt-2 text-xs font-medium text-gray-400">
           {helpText}
         </p>
       }
@@ -51,14 +49,14 @@ export default function ProjectData({ ...props }) {
   }, [version]);
 
   useEffect(() => {
-    if (version != newVersion) {
+    if (version !== newVersion) {
       if (semver.valid(newVersion)) {
         setVersion(newVersion);
       } else {
         console.log('invalid', newVersion);
       }
     }
-  }, [newVersion]);
+  }, [newVersion, setVersion, version]);
 
   return (
     <div className="bg-white overflow-hidden sm:rounded-md">

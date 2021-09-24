@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import {
-  BrowserRouter as Router,
   Switch,
   Redirect,
   Route
@@ -18,11 +17,11 @@ import ProjectLogs from './project/Logs';
 export default function Project({ match, ...props }) {
   const project = useStoreState((state) => state.projects.get(match.params.name));
   const loadSettings = useStoreActions((actions) => actions.loadSettings);
-  const closeSidebar = useStoreActions((actions) => actions.closeSidebar);
+  //const closeSidebar = useStoreActions((actions) => actions.closeSidebar);
 
   useEffect(() => {
     loadSettings();
-  }, []);
+  }, [loadSettings]);
 
   //closeSidebar();
 

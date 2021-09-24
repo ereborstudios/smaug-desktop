@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React  from 'react'
 import ProjectData from '../../components/ProjectData';
 import { LinkIcon } from '@heroicons/react/outline'
 
@@ -6,7 +6,7 @@ export default function ProjectOptions({ match, ...props }) {
 
   return (
     <div className="flex space-x-4">
-      <div className="flex-grow text-left w-1/3 border shadow border-gray-200 sm:rounded-md">
+      <div className="flex-grow w-1/3 text-left border border-gray-200 shadow sm:rounded-md">
         <ProjectData />
       </div>
       <div className="flex-shrink">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { CloudDownloadIcon, SearchIcon, CubeIcon } from '@heroicons/react/solid'
 import { useStoreState, useStoreActions } from 'easy-peasy';

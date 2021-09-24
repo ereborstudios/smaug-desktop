@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useStoreState, useStoreActions } from 'easy-peasy';
+import { useStoreState } from 'easy-peasy';
 import { LazyLog, ScrollFollow } from 'react-lazylog';
 import './LogViewer.css';
 
 export const LogViewer = ({ ...props }) => {
   const gameLog = useStoreState((state) => state.gameLog);
-  const setGameLog = useStoreActions((actions) => actions.setGameLog);
+  //const setGameLog = useStoreActions((actions) => actions.setGameLog);
   const [text, setText] = useState('');
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export const LogViewer = ({ ...props }) => {
     if (gameLog && gameLog === '') return;
 
     setText(text + "\n" + (gameLog || ''));
-  }, [gameLog]);
+  }, [gameLog, text]);
 
   return (
     <ScrollFollow

@@ -11,7 +11,7 @@ export const dragonruby = {
   install: async (zipFile) => {
     const cmd = Command.sidecar('smaug', ['dragonruby', 'install', '--json', zipFile])
     const output = await cmd.execute();
-    if (output.code != 0) {
+    if (output.code !== 0) {
       throw new Error(output.stderr);
     }
     return JSON.parse(output.stdout);
@@ -20,7 +20,7 @@ export const dragonruby = {
   uninstall: async (version) => {
     const cmd = Command.sidecar('smaug', ['dragonruby', 'uninstall', '--json', version])
     const output = await cmd.execute();
-    if (output.code != 0) {
+    if (output.code !== 0) {
       throw new Error(output.stderr);
     }
     return JSON.parse(output.stdout);
@@ -38,7 +38,7 @@ export const run = async (project) => {
 export const newProject = async (path) => {
   const cmd = Command.sidecar('smaug', ['new', '--json', path]);
   const output = await cmd.execute();
-  if (output.code != 0) {
+  if (output.code !== 0) {
     throw new Error(output.stderr);
   }
   return JSON.parse(output.stdout);
@@ -50,7 +50,7 @@ export const add = async (project, pkg) => {
   //cmd.stdout.on('data', line => {
   //});
   const output = await cmd.execute();
-  if (output.code != 0) {
+  if (output.code !== 0) {
     throw new Error(output.stderr);
   }
   return JSON.parse(output.stdout);
@@ -62,7 +62,7 @@ export const install = async (project) => {
   //cmd.stdout.on('data', line => {
   //});
   const output = await cmd.execute();
-  if (output.code != 0) {
+  if (output.code !== 0) {
     throw new Error(output.stderr);
   }
   return JSON.parse(output.stdout);

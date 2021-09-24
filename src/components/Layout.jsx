@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import {
@@ -15,7 +15,7 @@ import {
 } from '@heroicons/react/outline'
 import './Layout.css';
 import Header from './Header';
-import LogViewer from './LogViewer';
+//import LogViewer from './LogViewer';
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: HomeIcon },
@@ -37,7 +37,7 @@ export default function Layout({ header, hero, children, ...props }) {
   //const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
-    <div className="h-screen flex overflow-hidden bg-gray-100">
+    <div className="flex h-screen overflow-hidden bg-gray-100">
       <Transition.Root show={sidebarOpen} as={Fragment}>
         <Dialog as="div" className="fixed inset-0 flex z-40 md:hidden" onClose={openSidebar}>
           <Transition.Child

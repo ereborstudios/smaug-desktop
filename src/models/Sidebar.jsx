@@ -1,4 +1,4 @@
-import { action, thunk } from 'easy-peasy';
+import { action } from 'easy-peasy';
 
 const model = {
   sidebar: {

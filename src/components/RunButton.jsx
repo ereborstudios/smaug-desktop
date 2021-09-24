@@ -1,6 +1,5 @@
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { PlayIcon, PauseIcon } from '@heroicons/react/solid'
-import { run } from '../smaug';
 
 const iconCls = "-ml-1 mr-2 h-4 w-4";
 

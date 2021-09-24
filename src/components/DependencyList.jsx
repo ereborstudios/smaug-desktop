@@ -1,16 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { open } from '@tauri-apps/api/shell';
-import { PlusIcon, FolderOpenIcon, DotsVerticalIcon } from '@heroicons/react/outline'
 import { ExternalLinkIcon, CubeIcon } from '@heroicons/react/solid'
-import { useAlert } from 'react-alert'
-import { useStoreState, useStoreActions } from 'easy-peasy';
 import { ProjectStore } from '../stores/ProjectStore'
-import ConfirmationDialog from './ConfirmationDialog';
 import EmptyDependencyList from './EmptyDependencyList';
-import { dragonruby } from '../smaug';
 
 export default function DependencyList({ ...props }) {
-  const alert = useAlert();
   const dependencies = ProjectStore.useStoreState((state) => state.dependencies);
 
   const openExternal = (dependency) => {

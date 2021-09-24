@@ -60,7 +60,7 @@ export default function VersionList() {
 
   useEffect(() => {
     listVersions();
-  }, []);
+  }, [listVersions]);
 
   return (
     

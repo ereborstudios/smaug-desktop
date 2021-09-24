@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { FolderIcon, DotsHorizontalIcon } from '@heroicons/react/solid'
 import { open } from '@tauri-apps/api/dialog'
 import { homeDir, sep } from '@tauri-apps/api/path'
@@ -32,7 +32,7 @@ export default function NewProjectForm() {
       await setPath(defaultPath);
     }
     setDefaultPath();
-  }, [name]);
+  }, [name, setPath]);
 
   return (
     <form className="space-y-8 divide-y divide-gray-200">
@@ -48,7 +48,7 @@ export default function NewProjectForm() {
                 </p>
               </label>
               <div className="mt-1 sm:mt-0 sm:col-span-2">
-                <div className="max-w-lg flex rounded-md shadow-sm">
+                <div className="flex max-w-lg rounded-md shadow-sm">
                   <input
                     type="text"
                     name="title"
@@ -56,7 +56,7 @@ export default function NewProjectForm() {
                     autoComplete="title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                    className="flex-1 block w-full min-w-0 border-gray-300 rounded-none focus:ring-indigo-500 focus:border-indigo-500 rounded-r-md sm:text-sm"
                   />
                 </div>
                 <p className="mt-2 text-xs text-gray-400">
@@ -73,7 +73,7 @@ export default function NewProjectForm() {
                 </p>
               </label>
               <div className="mt-1 sm:mt-0 sm:col-span-2">
-                <div className="max-w-lg flex rounded-md shadow-sm">
+                <div className="flex max-w-lg rounded-md shadow-sm">
                   <input
                     type="text"
                     name="name"
@@ -81,7 +81,7 @@ export default function NewProjectForm() {
                     autoComplete="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="flex-1 block w-full focus:ring-indigo-500 focus:border-indigo-500 min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                    className="flex-1 block w-full min-w-0 border-gray-300 rounded-none focus:ring-indigo-500 focus:border-indigo-500 rounded-r-md sm:text-sm"
                   />
                 </div>
                 <p className="mt-2 text-xs text-gray-400">
@@ -94,10 +94,10 @@ export default function NewProjectForm() {
                   Location
                 </label>
                 <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:pt-2">
-                  <div className="mt-1 sm:mt-0 sm:col-span-2 flex rounded-md shadow-sm">
+                  <div className="flex mt-1 sm:mt-0 sm:col-span-2 rounded-md shadow-sm">
                     <div className="relative flex items-stretch flex-grow focus-within:z-10">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <FolderIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                      <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <FolderIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
                       </div>
                       <input
                         type="text"
@@ -106,21 +106,21 @@ export default function NewProjectForm() {
                         autoComplete="path"
                         value={path}
                         onChange={(e) => setPath(e.target.value)}
-                        className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 flex-grow min-w-0 rounded-none rounded-l-md pl-10 sm:text-sm border-gray-300"
+                        className="flex-1 flex-grow min-w-0 pl-10 border-gray-300 rounded-none focus:ring-indigo-500 focus:border-indigo-500 rounded-l-md sm:text-sm"
                       />
                     </div>
                     <button
                       type="button"
                       onClick={openBrowseDialog}
-                      className="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+                      className="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 border border-gray-300 space-x-2 rounded-r-md bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
                     >
-                      <DotsHorizontalIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                      <DotsHorizontalIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
                       <span>Browse</span>
                     </button>
                   </div>
                 </div>
               </div>
-              <p className="w-max mt-2 text-xs text-gray-400">
+              <p className="mt-2 text-xs text-gray-400 w-max">
                 The path to your new project
               </p>
 

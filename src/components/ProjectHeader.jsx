@@ -4,7 +4,6 @@ import { open } from '@tauri-apps/api/shell'
 import {
   ChevronDownIcon,
   ChevronRightIcon,
-  PlayIcon,
   FolderOpenIcon
 } from '@heroicons/react/solid'
 import { Menu, Transition } from '@headlessui/react'
@@ -73,12 +72,11 @@ export default function ProjectHeader({ ...props }) {
               <Menu.Items className="absolute left-0 w-48 py-1 mt-2 -ml-1 bg-white shadow-lg origin-top-left rounded-md ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <Menu.Item>
                   {({ active }) => (
-                    <a
-                      href="#"
+                    <button
                       className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                     >
                       Edit
-                    </a>
+                    </button>
                   )}
                 </Menu.Item>
               </Menu.Items>

@@ -1,5 +1,4 @@
-import { ObjectModel, ArrayModel, FunctionModel } from 'objectmodel'
-import { sep } from '@tauri-apps/api/path'
+import { ObjectModel, ArrayModel } from 'objectmodel'
 
 export const Smaugfile = ObjectModel({
   project: {

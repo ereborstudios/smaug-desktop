@@ -1,12 +1,9 @@
 import { createContextStore, action, thunk, computed, thunkOn } from 'easy-peasy';
 import 'easy-peasy/map-set-support';
 import slug from 'slug';
-import { ObjectModel, ArrayModel, FunctionModel } from 'objectmodel'
 import { invoke } from '@tauri-apps/api/tauri'
-import { sep } from '@tauri-apps/api/path'
 import { newProject, add as smaugAdd, install as smaugInstall } from '../smaug'
 import { Smaugfile } from '../models/Smaugfile'
-import { Project } from '../models/Project'
 
 export const ProjectStore = createContextStore((runtimeModel) => ({
   project: runtimeModel,

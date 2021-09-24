@@ -1,6 +1,6 @@
 import { action, thunk } from 'easy-peasy';
 import 'easy-peasy/map-set-support';
-import { ObjectModel, ArrayModel, FunctionModel } from 'objectmodel'
+import { ObjectModel, FunctionModel } from 'objectmodel'
 import { invoke, convertFileSrc } from '@tauri-apps/api/tauri'
 import { sep } from '@tauri-apps/api/path'
 import { Smaugfile } from './Smaugfile';
@@ -31,14 +31,14 @@ export const Project = ObjectModel({
 
 Project.prototype.Smaugfile = FunctionModel().return(String)(
   function() {
-    const tmp = new String(this.projectBasePath());
+    const tmp = String(this.projectBasePath());
     return [tmp.replace(/\/+$/, ''), 'Smaug.toml'].join(sep);
   }
 );
 
 Project.prototype.projectBasePath = FunctionModel().return(String)(
   function() {
-    const tmp = new String(this.path);
+    const tmp = String(this.path);
     return tmp.replace(/\/Smaug\.toml$/, '');
   }
 );

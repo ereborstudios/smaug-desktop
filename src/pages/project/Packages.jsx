@@ -1,16 +1,13 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { open } from '@tauri-apps/api/shell';
 import { useAlert } from 'react-alert'
 import { CloudDownloadIcon, ExternalLinkIcon } from '@heroicons/react/solid'
-import { useStoreState, useStoreActions } from 'easy-peasy';
 import { ProjectStore } from '../../stores/ProjectStore'
-import ProjectData from '../../components/ProjectData';
 import DependencyList from '../../components/DependencyList';
 import PackageSearchInput from '../../components/PackageSearchInput';
 
 export default function ProjectPackages({ match, ...props }) {
   const alert = useAlert();
-  const project = useStoreState((state) => state.projects.get(match.params.name));
   const installDependencies = ProjectStore.useStoreActions((actions) => actions.installDependencies);
 
   const install = async () => {
