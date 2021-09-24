@@ -57,6 +57,14 @@ jobs:
           prerelease: false
           includeDebug: false
 
+  arch:
+    runs-on: ubuntu-18.04
+    needs: [publish-tauri]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Verifies and builds the package
         uses: 2m/arch-pkgbuild-builder@v1.18
         with:
