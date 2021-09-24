@@ -65,6 +65,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Update the package metadata
+        run: |
+          awk -i inplace 'BEGINFILE{print "pkgver=${{ github.event.release.tag_name }}"}{print}' pkg/arch/smaug-desktop/PKGBUILD
+          wget https://github.com/ereborstudios/smaug-desktop/releases/download/${{ github.event.release.tag_name }}/smaug-desktop_${{ github.event.release.tag_name }}_amd64.deb -O pkg/arch/smaug-desktop/smaug-desktop_${{ github.event.release.tag_name }}_amd64.deb
+          SHA512SUM=$(sha512sum pkg/arch/smaug-desktop/smaug-desktop_${{ github.event.release.tag_name }}_amd64.deb | awk '{print $1}')
+          awk -v q="'" -v SHA512SUM=$SHA512SUM -i inplace 'BEGINFILE{print "sha512sums_x86_64=(" q SHA512SUM q ")"}{print}' pkg/arch/smaug-desktop/PKGBUILD
+          cd pkg/arch/smaug-desktop (
+            makepkg --printsrcinfo > .SRCINFO
+          )
+
       - name: Verifies and builds the package
         uses: 2m/arch-pkgbuild-builder@v1.18
         with:
