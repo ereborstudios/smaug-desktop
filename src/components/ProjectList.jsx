@@ -9,7 +9,7 @@ import { ProjectStore } from '../stores/ProjectStore'
 import { Project } from '../models/Project'
 
 export default function ProjectList() {
-  const settings = useStoreState((state) => state.settings);
+  //const settings = useStoreState((state) => state.settings);
   const settingsExpired = useStoreState((state) => state.settingsExpired);
   const loadSettings = useStoreActions((actions) => actions.loadSettings);
 

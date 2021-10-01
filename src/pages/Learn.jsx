@@ -1,5 +1,4 @@
 import Layout from '../components/Layout';
-import Search from '../components/Search';
 
 export default function Learn({ match, ...props }) {
 
