@@ -1,6 +1,7 @@
-import { action, thunk } from 'easy-peasy';
+import { action, thunk, computed } from 'easy-peasy';
 import 'easy-peasy/map-set-support';
 import { ObjectModel, ArrayModel } from 'objectmodel'
+import moment from 'moment';
 import { invoke } from '@tauri-apps/api/tauri'
 import { Project } from './Project';
 
@@ -14,10 +15,17 @@ export const Settings = ObjectModel({
 
 const model = {
   settings: new Settings(),
+  settingsRefreshedAt: false,
+  settingsExpired: computed((state) => (
+    (state.settingsRefreshedAt) ? state.settingsRefreshedAt.isBefore(
+      moment().subtract(60, 'seconds')
+    ) : true
+  )),
 
   updateSettings: action((state, payload) => {
     return {
       ...state,
+      settingsRefreshedAt: moment(),
       settings: new Settings(payload),
     };
   }),
@@ -37,6 +45,7 @@ const model = {
       name: payload.name,
       path: payload.Smaugfile(),
     });
+    await actions.loadSettings();
   }),
 
 };

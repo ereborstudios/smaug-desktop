@@ -13,6 +13,7 @@ import System from './pages/System';
 import Project from './pages/Project';
 import Projects from './pages/Projects';
 import Dashboard from './pages/Dashboard';
+import Learn from './pages/Learn';
 import NoMatch from './pages/NoMatch';
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
               <Route path="/system" component={System} />
               <Route path="/projects/:name" component={Project} />
               <Route exact path="/projects" component={Projects} />
+              <Route path="/learn" component={Learn} />
               <Route exact path="/" component={Dashboard} />
               <Route component={NoMatch} />
             </Switch>

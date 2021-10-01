@@ -1,6 +1,7 @@
-import { Fragment } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { useStoreState, useStoreActions } from 'easy-peasy';
+import { getVersion } from '@tauri-apps/api/app'
 import {
   NavLink
 } from "react-router-dom";
@@ -21,7 +22,7 @@ const navigation = [
   { name: 'Dashboard', href: '/', icon: HomeIcon },
   { name: 'Projects', href: '/projects', icon: CollectionIcon },
   { name: 'Packages', href: '/packages', icon: CodeIcon },
-  { name: 'Docs', href: '/docs', icon: BookOpenIcon },
+  { name: 'Learn', href: '/learn', icon: BookOpenIcon },
   { name: 'System', href: '/system', icon: CogIcon }
 ]
 
@@ -33,6 +34,16 @@ export default function Layout({ header, hero, children, ...props }) {
   const sidebarOpen = useStoreState((state) => state.sidebar.open);
   const openSidebar = useStoreActions((actions) => actions.openSidebar);
   const closeSidebar = useStoreActions((actions) => actions.closeSidebar);
+  const [version, setVersion] = useState(null);
+
+  const getVersionAsync = async () => {
+    const v = await getVersion();
+    setVersion(v);
+  }
+
+  useEffect(() => {
+    if (!version) getVersionAsync();
+  }, [version]);
 
   //const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -117,10 +128,18 @@ export default function Layout({ header, hero, children, ...props }) {
           <div className="flex-1 flex flex-col min-h-0">
             <div className="flex items-center h-16 flex-shrink-0 px-4 bg-gray-800">
               <img
-                className="h-8 w-auto"
+                className="h-8 w-auto mr-3 mt-1"
                 src="https://smaug.dev/smaug.png"
                 alt="Smaug"
               />
+              <div className="flex-1 text-left">
+                <h2 className="text-lg font-bold text-white">
+                  smaug
+                </h2>
+                <h3 className="text-xs font-base text-gray-400 tracking-widest">
+                  v{version}
+                </h3>
+              </div>
             </div>
             <div className="flex-1 flex flex-col overflow-y-auto">
               <nav className="static-sidebar">

@@ -1,12 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Auth0Provider } from '@auth0/auth0-react';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import sessionStorageCache from './sessionStorageCache.jsx';
+
+window.cache = sessionStorageCache;
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Auth0Provider
+      domain="ereborstudios.us.auth0.com"
+      clientId="nWLVxZ7n3UItLzdEBZfdtM1qqAFD20vR"
+      redirectUri={window.location.origin}
+      cache={sessionStorageCache}
+    >
+      <App />
+    </Auth0Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

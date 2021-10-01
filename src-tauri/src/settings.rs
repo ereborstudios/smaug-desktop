@@ -56,6 +56,7 @@ impl Settings {
 
 #[tauri::command]
 pub fn read_settings() -> Settings {
+  println!("Command: read_settings");
   let settings = match Settings::new() {
     Ok(settings) => settings,
     Err(error) => {

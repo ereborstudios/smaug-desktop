@@ -11,6 +11,7 @@ extern crate serde_derive;
 
 pub mod project;
 mod settings;
+pub mod session;
 
 use settings::Settings;
 use project::Project;
@@ -24,12 +25,12 @@ fn main() {
   let settings = match Settings::new() {
     Ok(settings) => settings,
     Err(error) => {
-      panic!("Problem: {:?}", error);
+      panic!("Settings error: {:?}", error);
     },
   };
   
   let settings = settings.save();
-    
+
   tauri::Builder::default()
     .setup(|app| {
       let window = app.get_window("main").unwrap();
@@ -61,6 +62,9 @@ fn main() {
                     project::read_smaug,
                     project::write_smaug,
                     settings::add_project_to_settings,
+                    session::session_cache_get,
+                    session::session_cache_set,
+                    session::session_cache_remove,
                     my_custom_command
     ])
     .run(tauri::generate_context!())

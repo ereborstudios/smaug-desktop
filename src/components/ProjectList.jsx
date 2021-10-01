@@ -10,15 +10,15 @@ import { Project } from '../models/Project'
 
 export default function ProjectList() {
   const settings = useStoreState((state) => state.settings);
+  const settingsExpired = useStoreState((state) => state.settingsExpired);
   const loadSettings = useStoreActions((actions) => actions.loadSettings);
 
   const projects = useStoreState((state) => state.projects);
   const [newProjectDialog, setNewProjectDialog] = useState(false);
 
   useEffect(() => {
-    loadSettings();
-    console.log('settings', settings);
-  }, [newProjectDialog, loadSettings, settings]);
+    if (settingsExpired) loadSettings();
+  }, [settingsExpired, loadSettings]);
 
   return (
     <div className="px-4 py-5 bg-white border-b border-gray-200 sm:px-6">

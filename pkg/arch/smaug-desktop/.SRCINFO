@@ -1,0 +1,24 @@
+pkgbase = smaug-desktop
+	pkgdesc = A tool to manage your DragonRuby Game Toolkit projects
+	pkgver = 0.1.0
+	pkgrel = 1
+	url = https://smaug.dev/
+	install = smaug-desktop.install
+	arch = x86_64
+	license = custom
+	depends = cairo
+	depends = desktop-file-utils
+	depends = gdk-pixbuf2
+	depends = glib2
+	depends = gtk3
+	depends = hicolor-icon-theme
+	depends = openssl
+	depends = pango
+	depends = webkit2gtk
+	depends = zlib
+	options = !strip
+	options = !emptydirs
+	source_x86_64 = https://github.com/ereborstudios/smaug-desktop/releases/download/0.1.0/smaug-desktop_0.1.0_amd64.deb
+	sha512sums_x86_64 = f98e39d1aaa1d7ea4e8e4e43fc105f1b78c6c394448a6ad7ce903bc2772cbee925340e8929b8aea47d0f396f10e8e611fa21188ec4464263b344ce4e897a2025
+
+pkgname = smaug-desktop

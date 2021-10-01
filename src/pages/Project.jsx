@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react'
 import {
   Switch,
   Redirect,
   Route
 } from "react-router-dom";
-import { useStoreState, useStoreActions } from 'easy-peasy';
+import { useStoreState } from 'easy-peasy';
 import Layout from '../components/Layout';
 import { ProjectStore } from '../stores/ProjectStore';
 import ProjectHeader from '../components/ProjectHeader';
@@ -16,12 +15,7 @@ import ProjectLogs from './project/Logs';
 
 export default function Project({ match, ...props }) {
   const project = useStoreState((state) => state.projects.get(match.params.name));
-  const loadSettings = useStoreActions((actions) => actions.loadSettings);
   //const closeSidebar = useStoreActions((actions) => actions.closeSidebar);
-
-  useEffect(() => {
-    loadSettings();
-  }, [loadSettings]);
 
   //closeSidebar();
 
