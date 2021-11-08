@@ -36,5 +36,5 @@ pub fn write_smaug(path: String, title: String, version: String, compile_ruby: b
     .expect("Couldn't write config file.");
 
   let package_info: Value = toml::from_str(&contents).unwrap();
-  return package_info;
+  package_info
 }

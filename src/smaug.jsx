@@ -30,8 +30,8 @@ export const dragonruby = {
 export const run = async (project) => {
   const cwd = await dirname(project.path);
   const cmd = Command.sidecar('smaug', ['run'], {cwd: cwd});
-  //cmd.stdout.on('data', line => {
-  //});
+  cmd.stdout.on('data', line => {
+  });
   return cmd;
 };
 

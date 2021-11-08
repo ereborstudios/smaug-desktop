@@ -1,13 +1,14 @@
 {
   "package": {
     "productName": "Smaug Desktop",
-    "version": "0.1.0"
+    "version": "0.1.1"
   },
   "build": {
     "distDir": "../build",
     "devPath": "http://localhost:3000",
     "beforeDevCommand": "yarn start",
-    "beforeBuildCommand": "yarn build"
+    "beforeBuildCommand": "yarn build",
+    "withGlobalTauri": true
   },
   "tauri": {
     "bundle": {
@@ -50,10 +51,14 @@
       "endpoints": [
         "https://api.smaug.dev/update/ereborstudios/smaug-desktop?target={{target}}&version={{current_version}}"
       ],
-      "dialog": true
+      "dialog": false
     },
     "allowlist": {
-      "all": true
+      "all": true,
+      "http": {
+        "all": true,
+        "request": true
+      }
     },
     "windows": [
       {
