@@ -14,7 +14,7 @@ export default function WelcomeMessage() {
   }, [version]);
 
   return (
-    <div className="bg-gray-900 rounded shadow shadow-lg border">
+    <div className="bg-gray-900 border rounded shadow shadow-lg">
       <div className="max-w-2xl mx-auto text-center pt-8 pb-8 px-4 sm:px-6 lg:px-8">
         <h2 className="text-xl font-extrabold text-indigo-200 sm:text-2xl">
           <span className="block">

@@ -7,7 +7,7 @@ license = "© 2021 Erebor Studios"
 repository = "https://github.com/ereborstudios/smaug-desktop"
 homepage = "https://smaug.dev"
 default-run = "smaug-desktop"
-edition = "2018"
+edition = "2021"
 build = "src/build.rs"
 
 [build-dependencies]
@@ -24,6 +24,8 @@ config = "0.11.0"
 serde_derive = "1.0.130"
 toml_edit = "0.3.1"
 duct = "0.13.5"
+nix = "0.23.0"
+remoteprocess = "0.4.8"
 
 [features]
 default = [ "custom-protocol" ]

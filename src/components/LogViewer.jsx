@@ -1,21 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useStoreState } from 'easy-peasy';
 import { LazyLog, ScrollFollow } from 'react-lazylog';
 import './LogViewer.css';
 
 export const LogViewer = ({ ...props }) => {
-  const gameLog = useStoreState((state) => state.gameLog);
-  //const setGameLog = useStoreActions((actions) => actions.setGameLog);
-  const [text, setText] = useState('');
-
-  useEffect(() => {
-    // Filter out file reload noise
-    if (gameLog && gameLog.match(/\*\* INFO: .*/)) return;
-    if (gameLog && gameLog.match(/\* INFO: .*/)) return;
-    if (gameLog && gameLog === '') return;
-
-    setText(text + "\n" + (gameLog || ''));
-  }, [gameLog, text]);
+  const gameLog = useStoreState((state) => state.getGameLog);
 
   return (
     <ScrollFollow
@@ -23,7 +12,8 @@ export const LogViewer = ({ ...props }) => {
       render={({ onScroll, follow, startFollowing, stopFollowing }) => (
         <LazyLog
           style={{ fontSize: '0.65rem', background: '#282a36' }}
-          selectableLines text={text.replace(/[\r\n]+/g, '\n').slice(1) || '\n'}
+          selectableLines
+          text={gameLog || "\n"}
           onScroll={onScroll}
           follow={follow} />
       )}

@@ -59,6 +59,8 @@ Project.prototype.save = FunctionModel().return(Promise)(
       title: this.getTitle(),
       version: this.config.project.version,
       compileRuby: this.config.project.compile_ruby,
+      itchUsername: this.config.itch.username,
+      itchUrl: this.config.itch.url,
     });
     return handler;
   }

@@ -1,6 +1,6 @@
-import { createStore, action, thunk } from 'easy-peasy';
+import { createStore, action, thunk, computed } from 'easy-peasy';
 import 'easy-peasy/map-set-support';
-import { run } from './smaug';
+import { run, killProcess } from './smaug';
 import settingsModel from './models/Settings';
 import toolkitModel from './models/Toolkit';
 import projectModel from './models/Project';
@@ -14,37 +14,27 @@ export const store = createStore({
   ...sidebarModel,
   ...packageModel,
 
-  child: null,
-  setChild: action((state, payload) => {
-    return {
-      ...state,
-      child: payload,
-    };
-  }),
   runChild: thunk(async (actions, payload) => {
     const cmd = await run(payload);
-    cmd.stdout.on('data', line => {
-      //actions.setGameLog(line);
-      console.log(`command stdout: "${line}"`)
-    });
-    const child = await cmd.spawn();
-    actions.setChild(child);
-    console.log('pid', child);
+    await cmd.spawn();
   }),
   killChild: thunk(async (actions, payload, helpers) => {
-    const { child } = helpers.getState();
-    console.log('child', child);
-    if (child) {
-      const result = await child.kill();
-      console.log('result', result, child);
-      actions.setChild(null);
+    await killProcess(payload);
+  }),
+  gameLogs: [''],
+  pushGameLog: action((state, payload) => {
+    state.gameLogs.push(payload);
+  }),
+  getGameLog: computed(
+    [(state) => state.gameLogs],
+    (gameLogs) => {
+      const filtered = gameLogs.filter((line) => {
+        if (line.match(/\*\* INFO: .*/)) return false;
+        if (line.match(/\* INFO: .*/)) return false;
+        if (line === '') return false;
+        return true;
+      });
+      return filtered.join("\n").replace(/[\r\n]+/g, '\n').slice(1);
     }
-  }),
-  gameLog: '',
-  setGameLog: action((state, payload) => {
-    return {
-      ...state,
-      gameLog: payload
-    };
-  }),
+  ),
 });

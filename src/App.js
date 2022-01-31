@@ -8,10 +8,12 @@ import { transitions, positions, Provider as AlertProvider } from 'react-alert'
 import { StoreProvider } from 'easy-peasy';
 import { store } from './store';
 import AlertTemplate from './components/AlertTemplate';
+import WindowEventHandler from './components/WindowEventHandler';
 import './App.css'
 import System from './pages/System';
 import Project from './pages/Project';
 import Projects from './pages/Projects';
+import NewProject from './pages/NewProject';
 import Dashboard from './pages/Dashboard';
 import Learn from './pages/Learn';
 import NoMatch from './pages/NoMatch';
@@ -32,6 +34,7 @@ function App() {
           <div className="App">
             <Switch>
               <Route path="/system" component={System} />
+              <Route exact path="/projects/new" component={NewProject} />
               <Route path="/projects/:name" component={Project} />
               <Route exact path="/projects" component={Projects} />
               <Route path="/learn" component={Learn} />
@@ -39,6 +42,7 @@ function App() {
               <Route component={NoMatch} />
             </Switch>
           </div>
+          <WindowEventHandler />
         </AlertProvider>
       </Router>
     </StoreProvider>

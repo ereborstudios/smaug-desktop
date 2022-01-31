@@ -8,7 +8,7 @@ import EmptyProjectList from './EmptyProjectList';
 import { ProjectStore } from '../stores/ProjectStore'
 import { Project } from '../models/Project'
 
-export default function ProjectList() {
+export default function ProjectList({ openNewProjectDialog, ...props }) {
   //const settings = useStoreState((state) => state.settings);
   const settingsExpired = useStoreState((state) => state.settingsExpired);
   const loadSettings = useStoreActions((actions) => actions.loadSettings);
@@ -19,6 +19,10 @@ export default function ProjectList() {
   useEffect(() => {
     if (settingsExpired) loadSettings();
   }, [settingsExpired, loadSettings]);
+
+  useEffect(() => {
+    setNewProjectDialog(openNewProjectDialog);
+  }, [openNewProjectDialog]);
 
   return (
     <div className="px-4 py-5 bg-white border-b border-gray-200 sm:px-6">

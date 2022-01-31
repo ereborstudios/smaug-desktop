@@ -27,7 +27,7 @@ export default function ProjectPackages({ match, ...props }) {
   };
 
   return (
-    <div>
+    <div className="px-4 py-2">
       <div className="flex justify-between w-full border-gray-200 space-x-8">
         <div className="flex-auto flex-grow w-full">
           <PackageSearchInput />

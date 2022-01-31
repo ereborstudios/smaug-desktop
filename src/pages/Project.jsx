@@ -6,6 +6,7 @@ import {
 import { useStoreState } from 'easy-peasy';
 import Layout from '../components/Layout';
 import { ProjectStore } from '../stores/ProjectStore';
+import LogRecorder from '../components/LogRecorder';
 import ProjectHeader from '../components/ProjectHeader';
 import ProjectOverviewCard from '../components/ProjectOverviewCard';
 import ProjectOptions from './project/Options';
@@ -23,6 +24,7 @@ export default function Project({ match, ...props }) {
 
   return (
     <ProjectStore.Provider runtimeModel={project}>
+      <LogRecorder />
       <Layout
         header={<ProjectHeader />}
         hero={<ProjectOverviewCard />}>

@@ -1,6 +1,6 @@
 # Maintainer: Logan Koester <logan@logankoester.com>
 pkgname=smaug-desktop
-pkgver=0.1.0
+pkgver=0.1.1
 pkgrel=1
 pkgdesc="A tool to manage your DragonRuby Game Toolkit projects"
 arch=('x86_64')
@@ -10,7 +10,7 @@ depends=('cairo' 'desktop-file-utils' 'gdk-pixbuf2' 'glib2' 'gtk3' 'hicolor-icon
 options=('!strip' '!emptydirs')
 install=${pkgname}.install
 source_x86_64=("https://github.com/ereborstudios/smaug-desktop/releases/download/${pkgver}/${pkgname}_${pkgver}_amd64.deb")
-sha512sums_x86_64=('f98e39d1aaa1d7ea4e8e4e43fc105f1b78c6c394448a6ad7ce903bc2772cbee925340e8929b8aea47d0f396f10e8e611fa21188ec4464263b344ce4e897a2025')
+sha512sums_x86_64=('f9accc3f42545abff3db8f777b41126b6a905ba37ddfa8626fa01fc5666bb7acb789ca06f67f38154d651a5d7a3cd76d67a2f5c9119a3aa6fcc8c40542bac481')
 
 package() {
 

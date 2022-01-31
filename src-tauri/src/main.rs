@@ -19,6 +19,10 @@ use project::Project;
 use tauri::{
   api::process::{Command, CommandEvent},
   Manager,
+  CustomMenuItem,
+  Menu,
+  MenuItem,
+  Submenu
 };
 
 fn main() {
@@ -31,7 +35,31 @@ fn main() {
   
   let settings = settings.save();
 
+  let quit = CustomMenuItem::new("quit".to_string(), "Quit").accelerator("CmdOrControl+Q");
+  let new_project = CustomMenuItem::new("newProject".to_string(), "Project").accelerator("CmdOrControl+N");
+  let manage_versions = CustomMenuItem::new("manageVersions".to_string(), "Manage versions");
+  let new_menu = Submenu::new("New", Menu::new().add_item(new_project));
+  let file_menu = Submenu::new("File", Menu::new()
+                             .add_submenu(new_menu)
+                             .add_item(quit));
+  let dragonruby_menu = Submenu::new("DragonRuby", Menu::new()
+                                .add_item(manage_versions));
+  let system_menu = Submenu::new("System", Menu::new()
+                                .add_submenu(dragonruby_menu));
+  let menu = Menu::new()
+    .add_submenu(file_menu)
+    .add_submenu(system_menu);
+
   tauri::Builder::default()
+    .menu(menu)
+    .on_menu_event(|event| {
+      match event.menu_item_id() {
+        "quit" => {
+          std::process::exit(0);
+        }
+        _ => {}
+      }
+    })
     .setup(|app| {
       let window = app.get_window("main").unwrap();
       tauri::async_runtime::spawn(async move {
@@ -65,10 +93,26 @@ fn main() {
                     session::session_cache_get,
                     session::session_cache_set,
                     session::session_cache_remove,
+                    kill_process,
+                    pid_exists,
                     my_custom_command
     ])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
+}
+
+#[tauri::command]
+fn kill_process(pid: i32) {
+  let p: nix::unistd::Pid = nix::unistd::Pid::from_raw(pid);
+  nix::sys::signal::kill(p, nix::sys::signal::Signal::SIGHUP).unwrap();
+}
+
+#[tauri::command]
+fn pid_exists(pid: remoteprocess::Pid) -> bool {
+  match remoteprocess::Process::new(pid) {
+    Ok(process) => process.exe().is_ok(),
+    Err(error) => false
+  }
 }
 
 #[tauri::command]

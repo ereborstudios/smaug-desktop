@@ -16,13 +16,13 @@ import {
 } from '@heroicons/react/outline'
 import './Layout.css';
 import Header from './Header';
-//import LogViewer from './LogViewer';
+import LogViewer from './LogViewer';
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: HomeIcon },
   { name: 'Projects', href: '/projects', icon: CollectionIcon },
-  { name: 'Packages', href: '/packages', icon: CodeIcon },
-  { name: 'Learn', href: '/learn', icon: BookOpenIcon },
+  //{ name: 'Packages', href: '/packages', icon: CodeIcon },
+  //{ name: 'Learn', href: '/learn', icon: BookOpenIcon },
   { name: 'System', href: '/system', icon: CogIcon }
 ]
 
@@ -50,7 +50,7 @@ export default function Layout({ header, hero, children, ...props }) {
   return (
     <div className="flex h-screen overflow-hidden bg-gray-100">
       <Transition.Root show={sidebarOpen} as={Fragment}>
-        <Dialog as="div" className="fixed inset-0 flex z-40 md:hidden" onClose={openSidebar}>
+        <Dialog as="div" className="fixed inset-0 z-40 flex md:hidden" onClose={openSidebar}>
           <Transition.Child
             as={Fragment}
             enter="transition-opacity ease-linear duration-300"
@@ -71,7 +71,7 @@ export default function Layout({ header, hero, children, ...props }) {
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-full"
           >
-            <div className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-gray-800">
+            <div className="relative flex flex-col flex-1 w-full max-w-xs pt-5 pb-4 bg-gray-800">
               <Transition.Child
                 as={Fragment}
                 enter="ease-in-out duration-300"
@@ -81,25 +81,25 @@ export default function Layout({ header, hero, children, ...props }) {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <div className="absolute top-0 right-0 -mr-12 pt-2">
+                <div className="absolute top-0 right-0 pt-2 -mr-12">
                   <button
                     type="button"
-                    className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                    className="flex items-center justify-center w-10 h-10 ml-1 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                     onClick={() => closeSidebar()}
                   >
                     <span className="sr-only">Close sidebar</span>
-                    <XIcon className="h-6 w-6 text-white" aria-hidden="true" />
+                    <XIcon className="w-6 h-6 text-white" aria-hidden="true" />
                   </button>
                 </div>
               </Transition.Child>
-              <div className="flex-shrink-0 flex items-center px-4">
+              <div className="flex items-center flex-shrink-0 px-4">
                 <img
-                  className="h-8 w-auto"
+                  className="w-auto h-8"
                   src="https://smaug.dev/smaug.png"
                   alt="Smaug"
                 />
               </div>
-              <div className="mt-5 flex-1 h-0 overflow-y-auto">
+              <div className="flex-1 h-0 mt-5 overflow-y-auto">
                 <nav className="sidebar">
                   {navigation.map((item) => (
                     <NavLink
@@ -125,10 +125,10 @@ export default function Layout({ header, hero, children, ...props }) {
       <div className={classNames(sidebarOpen ? "md:flex md:flex-shrink-0" : "hidden")}>
         <div className="flex flex-col w-40">
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex-1 flex flex-col min-h-0">
-            <div className="flex items-center h-16 flex-shrink-0 px-4 bg-gray-800">
+          <div className="flex flex-col flex-1 min-h-0">
+            <div className="flex items-center flex-shrink-0 h-16 px-4 bg-gray-800">
               <img
-                className="h-8 w-auto mr-3 mt-1"
+                className="w-auto h-8 mt-1 mr-3"
                 src="https://smaug.dev/smaug.png"
                 alt="Smaug"
               />
@@ -136,12 +136,12 @@ export default function Layout({ header, hero, children, ...props }) {
                 <h2 className="text-lg font-bold text-white">
                   smaug
                 </h2>
-                <h3 className="text-xs font-base text-gray-400 tracking-widest">
+                <h3 className="text-xs tracking-widest text-gray-400 font-base">
                   v{version}
                 </h3>
               </div>
             </div>
-            <div className="flex-1 flex flex-col overflow-y-auto">
+            <div className="flex flex-col flex-1 overflow-y-auto">
               <nav className="static-sidebar">
                 {navigation.map((item) => (
                   <NavLink
@@ -158,39 +158,37 @@ export default function Layout({ header, hero, children, ...props }) {
           </div>
         </div>
       </div>
-      <div className="flex flex-col w-0 flex-1 overflow-hidden">
-        <div className="relative z-10 flex-shrink-0 flex h-16 bg-gray-800 shadow">
+      <div className="flex flex-col flex-1 w-0 h-screen overflow-hidden">
+        <div className="relative z-10 flex flex-shrink-0 h-16 bg-gray-800 shadow">
           <button
             type="button"
-            className="px-4 border-r border-gray-900 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
+            className="px-4 text-gray-500 border-r border-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
             onClick={() => openSidebar()}
           >
             <span className="sr-only">Open sidebar</span>
-            <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
+            <MenuAlt2Icon className="w-6 h-6" aria-hidden="true" />
           </button>
           <Header>
             { header }
           </Header>
         </div>
 
-        <main className="flex-1 relative overflow-y-auto focus:outline-none">
+        <main className="relative flex-1 overflow-y-auto focus:outline-none">
 
           { hero }
 
-          <div className="py-6">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              { children }
-            </div>
+          <div className="mx-auto max-w-7xl">
+            { children }
           </div>
         </main>
 
-          {/*
+        {/*
         <div className="flex-auto">
           <div className="h-full text-left logViewer">
             <LogViewer />
           </div>
         </div>
-          */}
+        */}
       </div>
     </div>
   )

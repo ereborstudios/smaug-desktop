@@ -2,7 +2,11 @@ import { createContextStore, action, thunk, computed, thunkOn } from 'easy-peasy
 import 'easy-peasy/map-set-support';
 import slug from 'slug';
 import { invoke } from '@tauri-apps/api/tauri'
-import { newProject, add as smaugAdd, install as smaugInstall } from '../smaug'
+import { newProject,
+         add as smaugAdd,
+         install as smaugInstall,
+         build as smaugBuild,
+         publish as smaugPublish } from '../smaug'
 import { Smaugfile } from '../models/Smaugfile'
 
 export const ProjectStore = createContextStore((runtimeModel) => ({
@@ -35,6 +39,26 @@ export const ProjectStore = createContextStore((runtimeModel) => ({
   setPath: action((state, payload) => {
     const project = state.project;
     project.path = payload;
+    return {
+      ...state,
+      project: project,
+    };
+  }),
+
+  itchUsername: computed(state => state.project.config && state.project.config.itch.username),
+  setItchUsername: action((state, payload) => {
+    const project = state.project;
+    project.config.itch.username = payload;
+    return {
+      ...state,
+      project: project,
+    };
+  }),
+
+  itchUrl: computed(state => state.project.config && state.project.config.itch.url),
+  setItchUrl: action((state, payload) => {
+    const project = state.project;
+    project.config.itch.url = payload;
     return {
       ...state,
       project: project,
@@ -96,6 +120,8 @@ export const ProjectStore = createContextStore((runtimeModel) => ({
       actions.setVersion,
       actions.setTitle,
       actions.setCompileRuby,
+      actions.setItchUsername,
+      actions.setItchUrl,
     ],
     async (actions, target) => {
       console.log('saveProjectOnChange', actions, target);
@@ -117,4 +143,19 @@ export const ProjectStore = createContextStore((runtimeModel) => ({
     console.log('smaugInstall thunk', result);
     await actions.readSmaugfile(project.Smaugfile());
   }),
+
+  buildProject: thunk(async (actions, payload, helpers) => {
+    const { project } = helpers.getState();
+    const result = await smaugBuild(project);
+    console.log('smaugBuild thunk', result);
+    return result;
+  }),
+
+  publishProject: thunk(async (actions, payload, helpers) => {
+    const { project } = helpers.getState();
+    const result = await smaugPublish(project);
+    console.log('smaugPublish thunk', result);
+    return result;
+  }),
+
 }));
