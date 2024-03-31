@@ -32,14 +32,16 @@ export const Project = ObjectModel({
 Project.prototype.Smaugfile = FunctionModel().return(String)(
   function() {
     const tmp = String(this.projectBasePath());
-    return [tmp.replace(/\/+$/, ''), 'Smaug.toml'].join(sep);
+    const regex = new RegExp(`${sep}+$`)
+    return [tmp.replace(regex, ''), 'Smaug.toml'].join(sep);
   }
 );
 
 Project.prototype.projectBasePath = FunctionModel().return(String)(
   function() {
     const tmp = String(this.path);
-    return tmp.replace(/\/Smaug\.toml$/, '');
+    const regex = new RegExp(`${sep}Smaug\\.toml$`)
+    return tmp.replace(regex, '');
   }
 );
 

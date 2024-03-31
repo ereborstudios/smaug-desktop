@@ -5,6 +5,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import sessionStorageCache from './sessionStorageCache.jsx';
+import Breakpoints from './components/Breakpoints.jsx';
 
 window.cache = sessionStorageCache;
 
@@ -16,6 +17,7 @@ ReactDOM.render(
       redirectUri={window.location.origin}
       cache={sessionStorageCache}
     >
+      <Breakpoints />
       <App />
     </Auth0Provider>
   </React.StrictMode>,

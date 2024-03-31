@@ -1,6 +1,6 @@
 [package]
 name = "smaug-desktop"
-version = "0.1.1"
+version = "0.1.2"
 description = "A tool to manage your DragonRuby Game Toolkit projects"
 authors = [ "Logan Koester <logan@logankoester.com>" ]
 license = "© 2021 Erebor Studios"

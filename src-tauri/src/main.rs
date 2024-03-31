@@ -101,10 +101,33 @@ fn main() {
     .expect("error while running tauri application");
 }
 
+#[cfg(target_family = "unix")]
+fn kill_process_unix(pid: i32) {
+    let p: nix::unistd::Pid = nix::unistd::Pid::from_raw(pid);
+    nix::sys::signal::kill(p, nix::sys::signal::Signal::SIGHUP).unwrap();
+}
+
+#[cfg(target_family = "windows")]
+fn kill_process_windows(pid: i32) {
+    let output = std::process::Command::new("taskkill")
+        .arg("/PID")
+        .arg(pid.to_string())
+        .arg("/F")
+        .output()
+        .expect("Failed to execute taskkill command");
+
+    if !output.status.success() {
+        panic!("Failed to kill process with PID: {}", pid);
+    }
+}
+
 #[tauri::command]
 fn kill_process(pid: i32) {
-  let p: nix::unistd::Pid = nix::unistd::Pid::from_raw(pid);
-  nix::sys::signal::kill(p, nix::sys::signal::Signal::SIGHUP).unwrap();
+    #[cfg(target_family = "unix")]
+    kill_process_unix(pid);
+
+    #[cfg(target_family = "windows")]
+    kill_process_windows(pid);
 }
 
 #[tauri::command]
